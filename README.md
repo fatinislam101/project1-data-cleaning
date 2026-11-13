@@ -63,6 +63,36 @@ Original columns are never overwritten. Every cleaned version is a new column, s
 
 When loading the cleaned file, use `pd.read_csv("data/cleaned_data.csv", parse_dates=["Order_Date"])` so dates come back as dates.
 
-## Next step
+## Exploratory Data Analysis
 
-EDA and visualization on the cleaned data.
+The file `cleaned_data.csv` contains 2,500 rows and 16 columns. I analysed this dataset using the Python script `eda_all.py`, and according to the dataset's author, the dataset is synthetic (artificially generated).
+
+### Orders per city
+
+![Orders per city](charts/city_orders.png)
+
+Mumbai has the highest number of orders (443), followed by Hyderabad (436) and Ahmedabad (431), while Pune has the lowest (383). The difference between the highest and lowest is only 60 orders, showing a relatively even distribution across the six cities. This even spread is consistent with synthetic data and does not necessarily represent real customer demand.
+
+### Missing values per column
+
+![Missing values per column](charts/missing_values.png)
+
+`Units_Clean` has the most missing values (1,718 or 68.7%), followed by `Discount_%` (1,651 or 66.0%) and `Units_Sold` (1,306 or 52.2%). The additional 412 missing values in `Units_Clean` come from zero and negative quantities that were converted to missing values. We retained the missing values rather than filling them with made-up numbers, which means some analyses may have fewer usable observations.
+
+### Unit price distribution
+
+![Unit price distribution](charts/unit_price_hist.png)
+
+The histogram shows a relatively flat distribution, with each bin containing approximately 115 to 147 observations. Unit prices are spread across the range of 400.2 to 4,998.9, with a mean of 2,691.7 and a median of 2,686.0. This nearly uniform spread is consistent with artificially generated data rather than a naturally concentrated distribution of real-world product prices.
+
+### Average profit per product category
+
+![Average profit per product category](charts/avg_profit_category.png)
+
+Accessories have the highest average profit (1,025.3), while Jackets have the lowest (943.4), with a difference of 81.9. However, the standard deviation ranges from 1,140 to 1,178 across categories, indicating considerable variation in individual profit values. Therefore, we cannot conclude that Accessories genuinely perform better without further statistical testing.
+
+## Limitations
+
+- **Synthetic data:** The dataset is artificially generated, so its patterns may not accurately represent real-world sales, customer behaviour, or business performance.
+- **Missing values:** `Order_Date` contains 606 missing values (24.2%). Additionally, `Units_Clean` has 1,718 missing values (68.7%), and `Discount_%` has 1,651 missing values (66.0%). These missing values limit the reliability of some analyses.
+- **Sales and profit limitations:** `Sales_Amount` contains 2,321 zero values (92.8%) and 70 negative values, which may affect sales and profit analysis. The 81.9 average profit gap between Accessories and Jackets does not establish a statistically significant difference in their performance.
